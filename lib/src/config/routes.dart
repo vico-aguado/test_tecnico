@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_tecnico/src/ui/screens/home/home_screen.dart';
 import 'package:test_tecnico/src/ui/screens/splash/splash_screen.dart';
 
 enum Routes { splash, home }
@@ -24,7 +25,7 @@ class AppNavigator {
         return FadeRoute(page: const SplashScreen());
       case _Paths.home:
       default:
-        return FadeRoute(page: Container());
+        return FadeRoute(page: const HomeScreen());
     }
   }
 

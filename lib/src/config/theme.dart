@@ -32,7 +32,7 @@ ThemeData generateTheme() {
       ),
       titleSmall: TextStyle(
         fontSize: 14,
-        color: Colors.black,
+        color: textColor,
         fontWeight: FontWeight.bold,
       ),
       displayLarge: TextStyle(
