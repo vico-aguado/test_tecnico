@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_tecnico/src/ui/screens/splash/splash_screen.dart';
 
 enum Routes { splash, home }
 
@@ -20,7 +21,7 @@ class AppNavigator {
   static Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case _Paths.splash:
-        return FadeRoute(page: Container());
+        return FadeRoute(page: const SplashScreen());
       case _Paths.home:
       default:
         return FadeRoute(page: Container());
