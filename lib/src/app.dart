@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:test_tecnico/src/config/constants.dart';
 import 'package:test_tecnico/src/config/routes.dart';
+import 'package:test_tecnico/src/config/theme.dart';
 
 class PokeApp extends StatelessWidget {
   const PokeApp({super.key});
@@ -12,6 +13,7 @@ class PokeApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Tecnic Test',
+      theme: AppTheme.defaultTheme,
       navigatorKey: AppNavigator.navigatorKey,
       onGenerateRoute: AppNavigator.onGenerateRoute,
       builder: (context, child) {
