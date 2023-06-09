@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "home",
-        "list_pokemons"
+        "list_pokemons",
+        "favourites_list"
     ]
 }

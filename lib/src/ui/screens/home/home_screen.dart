@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_tecnico/src/bloc/pokemon_bloc.dart';
 import 'package:test_tecnico/src/config/images.dart';
 import 'package:test_tecnico/src/config/texts.dart';
+import 'package:test_tecnico/src/ui/screens/home/widgets/favourites_list_widget.dart';
 import 'package:test_tecnico/src/ui/screens/home/widgets/no_data_widget.dart';
 import 'package:test_tecnico/src/ui/screens/home/widgets/pokemonThumb/pokemon_thumb.dart';
 import 'package:test_tecnico/src/ui/widgets/rotate_pokeball_widget.dart';
@@ -11,6 +12,25 @@ import 'package:badges/badges.dart' as badges;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void showFavourites(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) {
+        return SizedBox(
+          height: size.height * .8,
+          child: const FavouritesListWidget(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +47,20 @@ class HomeScreen extends StatelessWidget {
               builder: (context, state) {
                 return badges.Badge(
                   showBadge: state.model.favoriteList.isNotEmpty,
-                  onTap: () {},
+                  onTap: () {
+                    showFavourites(context);
+                  },
                   position: badges.BadgePosition.bottomStart(start: -5),
                   badgeContent:
                       Text(state.model.favoriteList.length.toString()),
-                  child: const Image(
-                    image: AppImages.pokeball,
-                    height: 40,
+                  child: GestureDetector(
+                    onTap: () {
+                      showFavourites(context);
+                    },
+                    child: const Image(
+                      image: AppImages.pokeball,
+                      height: 40,
+                    ),
                   ),
                 );
               },
