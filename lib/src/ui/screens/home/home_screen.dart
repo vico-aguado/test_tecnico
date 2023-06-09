@@ -36,56 +36,78 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Image(
-                  image: AppImages.pokedesk,
-                  height: 35,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: TextWidget(
-                    text: Texts.instructions,
-                    style: TextStyles.labelMedium,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Image(
+                    image: AppImages.pokedesk,
+                    height: 35,
                   ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(child: BlocBuilder<PokemonBloc, PokemonState>(
-              builder: (context, state) {
-                if (state is LoadingState) {
-                  return Center(
-                      child: RotatePokeballWidget(
-                    color: Colors.grey.withOpacity(0.30),
-                  ));
-                }
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: TextWidget(
+                      text: Texts.instructions,
+                      style: TextStyles.labelMedium,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(child: BlocBuilder<PokemonBloc, PokemonState>(
+                builder: (context, state) {
+                  if (state is LoadingState) {
+                    if (state.model.pokemonsList.isEmpty) {
+                      return Center(
+                          child: RotatePokeballWidget(
+                        color: Colors.grey.withOpacity(0.30),
+                      ));
+                    }
+                  }
 
-                if (state.model.pokemonsList.isEmpty) {
-                  return const NoDataWidget();
-                }
+                  if (state.model.pokemonsList.isEmpty) {
+                    return const NoDataWidget();
+                  }
 
-                return ListView.builder(
-                  controller: state.model.scrollController,
-                  itemCount: state.model.pokemonsList.length,
-                  itemBuilder: (context, index) {
-                    return PokemonThumbWidget(
-                      index: index,
-                      pokemon: state.model.pokemonsList[index],
-                    );
-                  },
-                );
-              },
-            ))
-          ],
+                  return ListView.builder(
+                    controller: state.model.scrollController,
+                    itemCount: state.model.pokemonsList.length,
+                    itemBuilder: (context, index) {
+                      return PokemonThumbWidget(
+                        index: index,
+                        pokemon: state.model.pokemonsList[index],
+                      );
+                    },
+                  );
+                },
+              )),
+              BlocBuilder<PokemonBloc, PokemonState>(
+                builder: (context, state) {
+                  if (state is LoadingState) {
+                    if (state.model.pokemonsList.isNotEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                            child: RotatePokeballWidget(
+                          size: 40,
+                          color: Colors.grey.withOpacity(0.50),
+                        )),
+                      );
+                    }
+                  }
+
+                  return const SizedBox.shrink();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

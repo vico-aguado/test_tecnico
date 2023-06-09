@@ -31,7 +31,7 @@ class PokeApp extends StatelessWidget {
       ],
       child: BlocProvider<PokemonBloc>(
         create: (context) => PokemonBloc(context.read<PokemonRepository>())
-          ..add(const LoadPokemonsEvent(25, 0)),
+          ..add(const InitEvent()),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Tecnic Test',

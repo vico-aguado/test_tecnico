@@ -40,6 +40,7 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     Emitter<PokemonState> emit,
   ) async {
     state.model.scrollController.addListener(_scrollListener);
+    add(const LoadPokemonsEvent(25, 0));
   }
 
   Future<void> _loadPokemons(
