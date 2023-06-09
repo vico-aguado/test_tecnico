@@ -5,7 +5,6 @@ import 'package:test_tecnico/src/domain/entities/pokemon_model.dart';
 abstract class PokemonRepository {
   Future<List<Pokemon>> getPokemons({required int limit, required int offset});
   Future<Pokemon?> getPokemon(String number);
-  //TODO: add favorites
 }
 
 class PokemonDefaultRepository extends PokemonRepository {

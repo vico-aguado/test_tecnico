@@ -126,15 +126,40 @@ class PokemonThumbWidget extends StatelessWidget {
                 ),
                 SizedBox(
                     width: double.maxFinite,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.grey[300])),
-                        onPressed: () {},
-                        child: TextWidget(
-                          text: Texts.addPokemon,
-                          style: TextStyles.labelLarge,
-                        )))
+                    child: pokemonBloc.state.model.favoriteList.length >= 5
+                        ? SizedBox(
+                            height: 40,
+                            child: Center(
+                              child: TextWidget(
+                                text: Texts.isFull,
+                                style: TextStyles.labelLarge,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : state.model.data.isFavourite
+                            ? SizedBox(
+                                height: 40,
+                                child: Center(
+                                  child: TextWidget(
+                                    text: Texts.isFav,
+                                    style: TextStyles.labelLarge,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : ElevatedButton(
+                                onPressed: () {
+                                  final bloc = context.read<PokemonItemBloc>();
+                                  bloc.add(const SaveItemEvent());
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Colors.grey[300])),
+                                child: TextWidget(
+                                  text: Texts.addPokemon,
+                                  style: TextStyles.labelLarge,
+                                )))
               ],
             ),
           );

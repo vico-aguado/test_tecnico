@@ -30,7 +30,37 @@ class PokemonItemBloc extends Bloc<PokemonItemEvent, PokemonItemState> {
   Future<void> _saveItem(
     SaveItemEvent event,
     Emitter<PokemonItemState> emit,
-  ) async {}
+  ) async {
+    if (state.model.data.isFavourite) {
+      pokemonBloc.add(
+        UpdatePokemonItemEvent(
+          state.model.data.id - 1,
+          state.model.data.copyWith(isFavourite: false),
+        ),
+      );
+
+      emit(
+        DeletedItemState(
+          state.model
+              .copyWith(data: state.model.data.copyWith(isFavourite: false)),
+        ),
+      );
+    } else {
+      pokemonBloc.add(
+        UpdatePokemonItemEvent(
+          index,
+          state.model.data.copyWith(isFavourite: true),
+        ),
+      );
+
+      emit(
+        SavedItemState(
+          state.model
+              .copyWith(data: state.model.data.copyWith(isFavourite: true)),
+        ),
+      );
+    }
+  }
 
   Future<void> _loadData(
     LoadItemDataEvent event,

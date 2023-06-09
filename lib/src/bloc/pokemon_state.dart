@@ -29,14 +29,6 @@ class PokemonUpdatedState extends PokemonState {
   const PokemonUpdatedState(super.model);
 }
 
-class SpecieUpdatedState extends PokemonState {
-  const SpecieUpdatedState(super.model);
-}
-
-class EvolutionUpdatedState extends PokemonState {
-  const EvolutionUpdatedState(super.model);
-}
-
 class PokemonModel extends Equatable {
   final ScrollController scrollController;
   final int actualOffset;

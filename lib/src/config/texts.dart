@@ -6,4 +6,6 @@ class Texts {
   static String addPokemon = 'Agregar a mi equipo';
   static String type = 'Tipo:';
   static String name = 'Nombre:';
+  static String isFav = 'Ya es parte de tu equipo';
+  static String isFull = 'Tu equipo está completo';
 }

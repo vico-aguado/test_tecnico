@@ -23,15 +23,20 @@ class HomeScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: badges.Badge(
-              showBadge: false,
-              onTap: () {},
-              position: badges.BadgePosition.bottomStart(start: -5),
-              badgeContent: const Text('0'),
-              child: const Image(
-                image: AppImages.pokeball,
-                height: 40,
-              ),
+            child: BlocBuilder<PokemonBloc, PokemonState>(
+              builder: (context, state) {
+                return badges.Badge(
+                  showBadge: state.model.favoriteList.isNotEmpty,
+                  onTap: () {},
+                  position: badges.BadgePosition.bottomStart(start: -5),
+                  badgeContent:
+                      Text(state.model.favoriteList.length.toString()),
+                  child: const Image(
+                    image: AppImages.pokeball,
+                    height: 40,
+                  ),
+                );
+              },
             ),
           ),
         ],
