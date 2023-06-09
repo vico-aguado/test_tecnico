@@ -55,7 +55,7 @@ ThemeData generateTheme() {
       ),
       labelSmall: TextStyle(
         fontSize: 12,
-        color: textColor,
+        color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
     ).apply(

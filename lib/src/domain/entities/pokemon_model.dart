@@ -9,7 +9,20 @@ class Pokemon extends Equatable {
     this.types,
     this.loaded = false,
     this.isFavourite = false,
+    this.imageUrl = '',
   });
+
+  final int id;
+  final String name;
+  final List<Type>? types;
+  final bool loaded;
+  final bool isFavourite;
+  final String imageUrl;
+
+  factory Pokemon.fromJson(String source) =>
+      Pokemon.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  String toJson() => json.encode(toMap());
 
   factory Pokemon.fromMap(Map<String, dynamic> map) {
     final idTMP = (map['url'] ?? '').toString().split('/');
@@ -24,16 +37,39 @@ class Pokemon extends Equatable {
               ),
             )
           : null,
+      imageUrl:
+          map['sprites'] != null && map['sprites']['front_default'] != null
+              ? map['sprites']['front_default']
+              : '',
     );
   }
 
-  factory Pokemon.fromJson(String source) =>
-      Pokemon.fromMap(json.decode(source) as Map<String, dynamic>);
-  final int id;
-  final String name;
-  final List<Type>? types;
-  final bool loaded;
-  final bool isFavourite;
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'types': types?.map((x) => x.toMap()).toList(),
+      'image_url': imageUrl,
+    };
+  }
+
+  Pokemon copyWith({
+    int? id,
+    String? name,
+    List<Type>? types,
+    bool? loaded,
+    bool? isFavourite,
+    String? imageUrl,
+  }) {
+    return Pokemon(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      types: types ?? this.types,
+      loaded: loaded ?? this.loaded,
+      isFavourite: isFavourite ?? this.isFavourite,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 
   @override
   List<Object?> get props {
@@ -43,32 +79,7 @@ class Pokemon extends Equatable {
       types,
       loaded,
       isFavourite,
+      imageUrl,
     ];
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'types': types?.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  String toJson() => json.encode(toMap());
-
-  Pokemon copyWith({
-    int? id,
-    String? name,
-    List<Type>? types,
-    bool? loaded,
-    bool? isFavourite,
-  }) {
-    return Pokemon(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      types: types ?? this.types,
-      loaded: loaded ?? this.loaded,
-      isFavourite: isFavourite ?? this.isFavourite,
-    );
   }
 }
