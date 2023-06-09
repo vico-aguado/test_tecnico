@@ -76,9 +76,6 @@ class Pokemon extends Equatable {
     return [
       id,
       name,
-      types,
-      loaded,
-      isFavourite,
       imageUrl,
     ];
   }

@@ -14,3 +14,8 @@ class LoadItemDataEvent extends PokemonItemEvent {
 class SaveItemEvent extends PokemonItemEvent {
   const SaveItemEvent();
 }
+
+class DeleteItemEvent extends PokemonItemEvent {
+  final Pokemon data;
+  const DeleteItemEvent(this.data);
+}

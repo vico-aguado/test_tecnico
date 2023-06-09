@@ -36,10 +36,9 @@ class ApiDataSource {
 
   Future<Pokemon> getPokemon(String id) async {
     final url = '${AppConstants.urlBase}pokemon/$id';
-    debugPrint(url);
     final response = await networkManager.request<Map<String, dynamic>>(
       RequestMethod.get,
-      '${AppConstants.urlBase}pokemon/$id',
+      url,
     );
 
     if (response.statusCode == 200 && response.data != null) {

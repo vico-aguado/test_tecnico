@@ -21,6 +21,7 @@ class PokemonItemBloc extends Bloc<PokemonItemEvent, PokemonItemState> {
         ) {
     on<LoadItemDataEvent>(_loadData);
     on<SaveItemEvent>(_saveItem);
+    on<DeleteItemEvent>(_deleteItem);
   }
 
   final PokemonBloc pokemonBloc;
@@ -31,42 +32,44 @@ class PokemonItemBloc extends Bloc<PokemonItemEvent, PokemonItemState> {
     SaveItemEvent event,
     Emitter<PokemonItemState> emit,
   ) async {
-    if (state.model.data.isFavourite) {
-      pokemonBloc.add(
-        UpdatePokemonItemEvent(
-          state.model.data.id - 1,
-          state.model.data.copyWith(isFavourite: false),
-        ),
-      );
+    pokemonBloc.add(
+      UpdatePokemonItemEvent(
+        index,
+        state.model.data.copyWith(isFavourite: true),
+      ),
+    );
 
-      emit(
-        DeletedItemState(
-          state.model
-              .copyWith(data: state.model.data.copyWith(isFavourite: false)),
-        ),
-      );
-    } else {
-      pokemonBloc.add(
-        UpdatePokemonItemEvent(
-          index,
-          state.model.data.copyWith(isFavourite: true),
-        ),
-      );
+    emit(
+      SavedItemState(
+        state.model
+            .copyWith(data: state.model.data.copyWith(isFavourite: true)),
+      ),
+    );
+  }
 
-      emit(
-        SavedItemState(
-          state.model
-              .copyWith(data: state.model.data.copyWith(isFavourite: true)),
-        ),
-      );
-    }
+  Future<void> _deleteItem(
+    DeleteItemEvent event,
+    Emitter<PokemonItemState> emit,
+  ) async {
+    pokemonBloc.add(
+      UpdatePokemonItemEvent(
+        event.data.id - 1,
+        event.data.copyWith(isFavourite: false),
+      ),
+    );
+
+    emit(
+      DeletedItemState(
+        state.model.copyWith(data: event.data.copyWith(isFavourite: false)),
+      ),
+    );
   }
 
   Future<void> _loadData(
     LoadItemDataEvent event,
     Emitter<PokemonItemState> emit,
   ) async {
-    if (!state.model.data.loaded) {
+    if (!data.loaded) {
       emit(
         LoadingItemState(state.model),
       );
@@ -88,6 +91,8 @@ class PokemonItemBloc extends Bloc<PokemonItemEvent, PokemonItemState> {
       } catch (e) {
         emit(FailedItemState(state.model, e.toString()));
       }
+    } else {
+      emit(LoadedItemState(state.model.copyWith(data: data)));
     }
   }
 }
