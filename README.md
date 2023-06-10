@@ -1,16 +1,16 @@
 # test_tecnico
 
-A new Flutter project.
+Proyecto para prueba técnica.
 
-## Getting Started
+## screenshots
 
-This project is a starting point for a Flutter application.
+<img src="screenshots/screen1.png"  width="200" height="434">
+<img src="screenshots/screen2.png"  width="200" height="434">
+<img src="screenshots/screen3.png"  width="200" height="434">
+<img src="screenshots/screen4.png"  width="200" height="434">
+<img src="screenshots/screen5.png"  width="200" height="434">
+<img src="screenshots/screen6.png"  width="200" height="434">
 
-A few resources to get you started if this is your first Flutter project:
+## test
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="screenshots/test.png"  width="500" height="267">
