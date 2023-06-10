@@ -87,14 +87,30 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
 
       final favList = List<Pokemon>.from(state.model.favoriteList);
 
+      var model = state.model.copyWith(
+        pokemonsList: list,
+        favoriteList: favList,
+      );
+
       if (event.data.isFavourite) {
-        favList.add(event.data);
+        if (favList.length < 5) {
+          List<Pokemon> item =
+              favList.where((element) => element.id == event.data.id).toList();
+          if (item.isEmpty) {
+            favList.add(event.data);
+          } else {
+            emit(FailState(model, 'Same item'));
+            return;
+          }
+        } else {
+          emit(FailState(model, '5 is the limit'));
+          return;
+        }
       } else {
         favList.remove(event.data);
       }
 
-      final model = state.model.copyWith(
-        pokemonsList: list,
+      model = model.copyWith(
         favoriteList: favList,
       );
 

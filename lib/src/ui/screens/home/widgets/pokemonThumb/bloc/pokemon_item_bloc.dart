@@ -32,19 +32,32 @@ class PokemonItemBloc extends Bloc<PokemonItemEvent, PokemonItemState> {
     SaveItemEvent event,
     Emitter<PokemonItemState> emit,
   ) async {
-    pokemonBloc.add(
-      UpdatePokemonItemEvent(
-        index,
-        state.model.data.copyWith(isFavourite: true),
-      ),
-    );
+    if (pokemonBloc.state.model.favoriteList.length < 5) {
+      List<Pokemon> item = pokemonBloc.state.model.favoriteList
+          .where((element) => element.id == data.id)
+          .toList();
 
-    emit(
-      SavedItemState(
-        state.model
-            .copyWith(data: state.model.data.copyWith(isFavourite: true)),
-      ),
-    );
+      if (item.isEmpty) {
+        pokemonBloc.add(
+          UpdatePokemonItemEvent(
+            index,
+            state.model.data.copyWith(isFavourite: true),
+          ),
+        );
+
+        emit(
+          SavedItemState(
+            state.model
+                .copyWith(data: state.model.data.copyWith(isFavourite: true)),
+          ),
+        );
+      } else {
+        emit(FailedItemState(state.model, 'Same item'));
+        return;
+      }
+    } else {
+      emit(FailedItemState(state.model, '5 is the limit'));
+    }
   }
 
   Future<void> _deleteItem(
